@@ -1,0 +1,39 @@
+{
+	"name": "file-flashcards",
+	"version": "0.0.1",
+	"description": "Treat your MarkDown files as flashcards, supporting spaced repetition.",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"test:coverage": "jest --coverage",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"type-check": "tsc --noEmit"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "GPL-3.0",
+	"devDependencies": {
+		"@types/canvas-confetti": "^1.9.0",
+		"@types/jest": "^30.0.0",
+		"@types/node": "^16.11.6",
+		"@typescript-eslint/eslint-plugin": "5.29.0",
+		"@typescript-eslint/parser": "5.29.0",
+		"builtin-modules": "3.3.0",
+		"esbuild": "0.17.3",
+		"jest": "^30.0.5",
+		"obsidian": "latest",
+		"ts-jest": "^29.4.1",
+		"tslib": "2.4.0",
+		"typescript": "4.7.4"
+	},
+	"dependencies": {
+		"canvas-confetti": "^1.9.3",
+		"minimatch": "^10.0.3",
+		"ts-fsrs": "^5.2.2"
+	}
+}
