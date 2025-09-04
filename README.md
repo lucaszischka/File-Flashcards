@@ -1,8 +1,8 @@
-# Flashcards from MarkDown files
+# 🧠 Flashcards from MarkDown files
 
 An Obsidian plugin for file-centric spaced repetition where each Markdown file becomes a flashcard. Uses the FSRS (Free Spaced Repetition Scheduler) algorithm with scheduling metadata stored in YAML frontmatter.
 
-## Features
+## 🚀 Features
 
 - **File-based Cards**: Each Markdown file = one flashcard
 - **FSRS Algorithm**: Modern Free Spaced Repetition Scheduler for optimal review scheduling  
@@ -14,7 +14,7 @@ An Obsidian plugin for file-centric spaced repetition where each Markdown file b
 - **Ribbon Badge**: Visual indicator showing cards due for review today (can be disabled)
 - **Error Handling**: Graceful error recovery with user-friendly messages and data backup
 
-## Quick Start
+## ⚡ Quick Start
 
 1. **Install** the plugin from Community Plugins
 2. **Configure** include patterns in Settings → Flashcards from MarkDown files
@@ -24,45 +24,45 @@ An Obsidian plugin for file-centric spaced repetition where each Markdown file b
 4. **Select a deck** if multiple include patterns create different decks
 5. **Review cards** using the FSRS rating system (Again, Hard, Good, Easy)
 
-## Settings
+## ⚙️ Settings
 
-### File Selection
+### 📝 File Selection
 - **Include Patterns**: Folders/patterns to include (e.g., `Flashcards/`, `Study/**`)
   - Each pattern creates a separate deck for review
   - Supports glob patterns with wildcards (`*`, `**`)
   - Hierarchical deck organization based on pattern specificity
 - **Exclude Patterns**: Files/patterns to exclude (e.g., `Templates/`, `*.template.md`)
 
-### Review Behavior  
+### 🎯 Review Behavior  
 - **Max Cards Per Day**: Limit daily reviews (0 = unlimited)
   - Applies to total cards across all decks
   - Resets daily at midnight
   - When limit is reached, option to continue with all cards or batch size
 - **Show Badge**: Display count of due cards on ribbon icon
 
-## File Patterns & Decks
+## 📁 File Patterns & Decks
 
 The plugin creates **decks** from your include patterns, allowing organized review sessions:
 
-### Pattern Examples
+### 📋 Pattern Examples
 - `Flashcards/` - Include entire folder and subfolders (creates "Flashcards" deck)
 - `Study/**` - Include all files in Study folder recursively (creates "Study" deck)  
 - `Work/Project-A/*.md` - Include specific markdown files (creates "Project-A" deck)
 - `*` - Include all files in vault (creates "All" deck)
 
-### Deck Hierarchy
+### 🌳 Deck Hierarchy
 - More specific patterns become child decks of general ones
 - Example: `Work/Math/**` becomes a child of `Work/**`
 - Hierarchical display with indentation
 - Single deck: Review starts immediately
 - Multiple decks: Deck selection modal appears first
 
-### Exclusion Patterns
+### 🚫 Exclusion Patterns
 - `Templates/` - Exclude Templates folder  
 - `**.template.md` - Exclude template files
 - Supports same glob patterns as include patterns
 
-## Keyboard Shortcuts
+## ⌨️ Keyboard Shortcuts
 
 During review sessions:
 - **Space/Enter**: Reveal answer
@@ -76,12 +76,12 @@ In deck selection:
 - **Enter**: Start review with selected deck
 - **Escape**: Close deck selection modal
 
-## Technical Implementation
+## 🛠️ Technical Implementation
 
 Uses the **FSRS (Free Spaced Repetition Scheduler)** algorithm, which is more sophisticated and research-backed compared to traditional SM-2 (e.g. used by Anki). The algorithm automatically optimizes review timing based on your historical performance, making it more efficient than fixed interval systems.
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) for development setup and implementation details.
 
-## License
+## 📄 License
 
 GNU GPLv3 License - see [LICENSE](LICENSE) file for details.
