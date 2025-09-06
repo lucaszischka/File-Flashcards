@@ -1,0 +1,318 @@
+/* File Flashcards Plugin Styles */
+
+/* Deck Selection Styles */
+.ff-deck-container {
+    display: flex;
+    padding: 0.8em;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    border: 1px solid var(--background-modifier-border);
+}
+
+.ff-deck-container.ff-disabled {
+    background-color: var(--background-secondary);
+}
+
+.ff-deck-container.ff-deck-clickable {
+    cursor: pointer;
+    background-color: var(--interactive-normal);
+}
+
+.ff-deck-container.ff-selected {
+    background-color: var(--interactive-accent);
+}
+
+.ff-deck-container.ff-deck-clickable:hover {
+    background-color: var(--interactive-hover);
+}
+
+.ff-deck-container.ff-selected:hover {
+    background-color: var(--interactive-accent-hover);
+}
+
+.ff-deck-name-path {
+    flex: 1;
+    min-width: 0;
+}
+
+.ff-deck-name {
+    font-weight: bold;
+}
+
+.ff-disabled .ff-deck-name {
+    color: var(--text-faint);
+}
+
+.ff-selected .ff-deck-name {
+    color: var(--text-on-accent);
+}
+
+.ff-deck-path {
+    font-size: 0.6em;
+    color: var(--text-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    padding-right: 10px;
+}
+
+.ff-selected .ff-deck-path {
+    color: var(--text-on-accent);
+    opacity: 0.6;
+}
+
+.ff-deck-counts {
+    text-align: right;
+}
+
+.ff-deck-due {
+    color: var(--text-accent);
+    font-weight: bold;
+}
+
+.ff-selected .ff-deck-due {
+    color: var(--text-on-accent);
+}
+
+.ff-deck-total {
+    color: var(--text-muted);
+}
+
+.ff-selected .ff-deck-total {
+    color: var(--text-on-accent);
+    opacity: 0.8;
+}
+
+.ff-scroll-padding {
+    padding: 1em;
+}
+
+.ff-button-disabled {
+    cursor: default !important;
+}
+
+/* Settings Tab Styles */
+.ff-settings-input-wide {
+    width: 400px;
+}
+
+.ff-settings-preview {
+    margin-top: 1em;
+    padding: 0.5em;
+    background: var(--background-secondary);
+    border-radius: 10px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* Error Modal Styles */
+.ff-error-title {
+    color: var(--text-error);
+}
+
+.ff-error-scroll-padding {
+    padding: 0 1em;
+}
+
+.ff-error-item {
+    margin: 1em 0;
+    padding: 0.5em;
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    border-left: 10px solid var(--text-error);
+    padding-left: 15px;
+}
+
+.ff-error-file {
+    font-size: 0.9em;
+    color: var(--text-faint);
+    font-family: var(--font-monospace);
+    margin-bottom: 0.25em;
+}
+
+.ff-error-header {
+    color: var(--text-error);
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.ff-error-message {
+    font-weight: 500;
+    margin-bottom: 0.5em;
+}
+
+.ff-error-field {
+    font-family: var(--font-monospace);
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+.ff-error-value {
+    font-family: var(--font-monospace);
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+.ff-error-suggestion {
+    font-style: italic;
+    color: var(--text-accent);
+    margin-top: 0.5em;
+}
+
+/* Ribbon Icon Styles */
+.ff-ribbon-icon {
+    position: relative;
+}
+
+.ff-ribbon-icon.ff-ribbon-disabled {
+    color: var(--text-faint);
+}
+
+.ff-ribbon-icon.ff-ribbon-enabled {
+    color: var(--text-normal);
+}
+
+.ff-ribbon-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    font-size: 8px;
+    font-weight: 800;
+    padding: 0 4px;
+    border-radius: 10px;
+}
+
+/* Component Styles */
+.ff-fullscreen-modal {
+    width: 100vw !important;
+    height: 100vh !important;
+    /* For fullscreen size:
+    maxWidth: 100vw;
+    maxHeight: 100vh;
+    */
+}
+
+.ff-modal-header {
+    margin-bottom: 0;
+}
+
+.ff-modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.ff-spacer {
+    flex: 1;
+}
+
+.ff-vstack {
+    display: flex;
+    flex-direction: column;
+}
+
+.ff-button {
+    cursor: pointer;
+    flex: 1;
+    max-width: 200px;
+}
+
+.ff-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    margin-top: 1em;
+}
+
+.ff-scroll-container {
+    background: var(--background-primary-alt);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 20px;
+    overflow: hidden; /* Ensures border-radius clips everything */
+    position: relative; /* Make sure icon is positioned correctly */
+}
+
+.ff-scroll-view {
+    overflow-y: auto;
+    height: 100%;
+    text-align: left;
+}
+
+/* Error Display Styles */
+.ff-error-container {
+    background: var(--background-secondary);
+    border: 2px solid var(--text-error);
+}
+
+.ff-error-content {
+    padding: 2em;
+    text-align: center;
+}
+
+.ff-error-display-title {
+    color: var(--text-error);
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.ff-error-display-message {
+    margin-bottom: 0.5em;
+}
+
+.ff-error-display-path {
+    font-family: var(--font-monospace);
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-bottom: 1.5em;
+    word-break: break-all;
+}
+
+.ff-error-details {
+    margin-bottom: 1.5em;
+    text-align: left;
+}
+
+.ff-error-details-summary {
+    cursor: pointer;
+    color: var(--text-muted);
+    margin-bottom: 0.5em;
+}
+
+.ff-error-content-details {
+    background: var(--background-primary-alt);
+    padding: 1em;
+    border-radius: 10px;
+    font-size: 0.8em;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.ff-stacktrace-padding {
+    padding: 0 1em;
+}
+
+.ff-clickable-icon {
+    cursor: pointer;
+}
+
+.ff-edit-button {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    padding: 8px; /* Overwrite default padding */
+    /* Make circle */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.ff-progress-indicator {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-top: 0.5em;
+}

@@ -27,6 +27,7 @@ export default class FileFlashcardsPlugin extends Plugin {
 			'Start Spaced Repetition',
 			() => this.openModal()
 		)
+		this.ribbonIconEl.addClass('ff-ribbon-icon')
 
 		// Generate the decks
 		this.updateDecks()
@@ -129,7 +130,7 @@ export default class FileFlashcardsPlugin extends Plugin {
 		if (!this.ribbonIconEl) return
 
 		// Remove existing badge if any
-		const existingBadge = this.ribbonIconEl.querySelector('.file-flashcards-badge')
+		const existingBadge = this.ribbonIconEl.querySelector('.ff-ribbon-badge')
 		if (existingBadge)
 			existingBadge.remove()
 
@@ -145,22 +146,13 @@ export default class FileFlashcardsPlugin extends Plugin {
 					// Create badge element
 					const badge = document.createElement('span')
 					badge.textContent = todayCount.toString()
-					badge.className = 'file-flashcards-badge'
-					badge.style.position = 'absolute'
-					badge.style.top = '-4px'
-					badge.style.right = '-4px'
-					badge.style.background = 'var(--interactive-accent)'
-					badge.style.color = 'var(--text-on-accent)'
-					badge.style.fontSize = '8px'
-					badge.style.fontWeight = '800'
-					badge.style.padding = '0 4px'
-					badge.style.borderRadius = '10px'
+					badge.addClass('ff-ribbon-badge')
 
 					// Enable ribbon icon
-					this.ribbonIconEl.style.color = 'var(--text-normal)'
+					this.ribbonIconEl.removeClass('ff-ribbon-disabled')
+					this.ribbonIconEl.addClass('ff-ribbon-enabled')
 
 					// Position badge relative to ribbon icon
-					this.ribbonIconEl.style.position = 'relative'
 					this.ribbonIconEl.appendChild(badge)
 
 					// Update tooltip to include count
@@ -172,7 +164,8 @@ export default class FileFlashcardsPlugin extends Plugin {
 				}
 			} else {
 				// Disable ribbon icon if no include patterns or decks are available
-				this.ribbonIconEl.style.color = 'var(--text-faint)'
+				this.ribbonIconEl.removeClass('ff-ribbon-enabled')
+				this.ribbonIconEl.addClass('ff-ribbon-disabled')
 			}
 		}
 	}

@@ -26,7 +26,7 @@ export class DeckSelectionStates {
         // Create scrollable deck list container
         const outerEl = this.components.createScrollViewContainer()
         const innerEl = this.components.createScrollView(outerEl)
-        innerEl.style.padding = '1em'
+        innerEl.addClass('ff-scroll-padding')
         this.renderDecks(innerEl, this.plugin.decks, 0, selectedDeck)
 
         this.components.addSpacer(this.contentEl)
@@ -40,7 +40,7 @@ export class DeckSelectionStates {
             buttonContainer
         )
         startButton.disabled = true
-        startButton.style.cursor = 'default'
+        startButton.addClass('ff-button-disabled')
         startButton.id = 'start-review-button'
     }
 
@@ -75,18 +75,14 @@ export class DeckSelectionStates {
 
         // Add interactivity for clickable decks
         if (dueCards !== 0)
-            this.addDeckInteractivity(deckEl, deck)
+            deckEl.onclick = () => this.selectDeck(deck, deckEl)
 
         return deckEl
     }
 
     private createDeckContainer(depth: number, dueCards: number, isSelected: boolean): HTMLElement {
         const deckEl = document.createElement('div')
-        deckEl.style.display = 'flex'
-        deckEl.style.padding = '0.8em'
-        deckEl.style.borderRadius = '10px'
-        deckEl.style.marginBottom = '5px'
-        deckEl.style.border = '1px solid var(--background-modifier-border)'
+        deckEl.addClass('ff-deck-container')
         
         // Add left margin for indentation
         deckEl.style.marginLeft = `${depth * 20}px`
@@ -94,13 +90,11 @@ export class DeckSelectionStates {
 
         // Set background color based on state
         if (isSelected) {
-            deckEl.addClass('deck-selected')
-            deckEl.style.backgroundColor = 'var(--interactive-accent)'
+            deckEl.addClass('ff-selected')
         } else if (dueCards !== 0) {
-            deckEl.style.cursor = 'pointer'
-            deckEl.style.backgroundColor = 'var(--interactive-normal)'
+            deckEl.addClass('ff-deck-clickable')
         } else {
-            deckEl.style.backgroundColor = 'var(--background-secondary)'
+            deckEl.addClass('ff-disabled')
         }
 
         return deckEl
@@ -108,40 +102,19 @@ export class DeckSelectionStates {
 
     private createNameAndPathSection(deckEl: HTMLElement, deck: Deck, dueCards: number, isSelected: boolean): HTMLElement {
         const nameAndPathEl = this.components.createVStack(deckEl)
-        nameAndPathEl.style.flex = '1'
-        nameAndPathEl.style.minWidth = '0'
+        nameAndPathEl.addClass('ff-deck-name-path')
         
         // Create name element
         const nameEl = nameAndPathEl.createDiv()
         nameEl.setText(deck.getName())
-        nameEl.style.fontWeight = 'bold'
-        nameEl.addClass('deck-name')
+        nameEl.addClass('ff-deck-name')
         
-        // Set name color based on state
-        if (dueCards === 0) {
-            nameEl.style.color = 'var(--text-faint)'
-        } else if (isSelected) {
-            nameEl.style.color = 'var(--text-on-accent)'
-        }
-
         this.components.addSpacer(nameAndPathEl)
         
         // Create path element
         const pathEl = nameAndPathEl.createDiv()
         pathEl.setText(deck.pattern)
-        pathEl.style.fontSize = '0.6em'
-        pathEl.style.color = 'var(--text-faint)'
-        pathEl.style.overflow = 'hidden'
-        pathEl.style.textOverflow = 'ellipsis'
-        pathEl.style.whiteSpace = 'nowrap'
-        pathEl.style.width = '100%'
-        pathEl.style.paddingRight = '10px'
-        pathEl.addClass('deck-path')
-        
-        if (isSelected) {
-            pathEl.style.color = 'var(--text-on-accent)'
-            pathEl.style.opacity = '0.6'
-        }
+        pathEl.addClass('ff-deck-path')
         
         this.components.addSpacer(nameAndPathEl)
 
@@ -150,15 +123,13 @@ export class DeckSelectionStates {
 
     private createCountsSection(deckEl: HTMLElement, dueCards: number, totalCards: number, isSelected: boolean): HTMLElement {
         const countsEl = this.components.createVStack(deckEl)
-        countsEl.style.textAlign = 'right'
+        countsEl.addClass('ff-deck-counts')
         
         // Create due count element if there are due cards
         if (dueCards > 0) {
             const dueEl = countsEl.createDiv()
             dueEl.setText(`${dueCards} due`)
-            dueEl.style.color = isSelected ? 'var(--text-on-accent)' : 'var(--text-accent)'
-            dueEl.style.fontWeight = 'bold'
-            dueEl.addClass('deck-due')
+            dueEl.addClass('ff-deck-due')
         }
         
         this.components.addSpacer(countsEl)
@@ -166,41 +137,11 @@ export class DeckSelectionStates {
         // Create total count element
         const totalEl = countsEl.createDiv()
         totalEl.setText(`${totalCards} ${totalCards === 1 ? 'card' : 'cards'}`)
-        totalEl.style.color = isSelected ? 'var(--text-on-accent)' : 'var(--text-muted)'
-        if (isSelected) {
-            totalEl.style.opacity = '0.8'
-        }
-        totalEl.addClass('deck-total')
+        totalEl.addClass('ff-deck-total')
 
         this.components.addSpacer(countsEl)
 
         return countsEl
-    }
-
-    private addDeckInteractivity(deckEl: HTMLElement, deck: Deck): void {
-        // Add click handler
-        deckEl.onclick = () => this.selectDeck(deck, deckEl)
-
-        // Add hover effects
-        deckEl.onmouseenter = () => {
-            // Check current selection state instead of using captured value
-            const currentlySelected = deckEl.hasClass('deck-selected')
-            if (currentlySelected) {
-                deckEl.style.backgroundColor = 'var(--interactive-accent-hover)'
-            } else {
-                deckEl.style.backgroundColor = 'var(--interactive-hover)'
-            }
-        }
-        
-        deckEl.onmouseleave = () => {
-            // Check current selection state instead of using captured value
-            const currentlySelected = deckEl.hasClass('deck-selected')
-            if (currentlySelected) {
-                deckEl.style.backgroundColor = 'var(--interactive-accent)'
-            } else {
-                deckEl.style.backgroundColor = 'var(--interactive-normal)'
-            }
-        }
     }
 
     // MARK: Selection Management
@@ -208,54 +149,22 @@ export class DeckSelectionStates {
     enableStartButton(): void {
         const startButton = this.contentEl.querySelector('#start-review-button') as HTMLButtonElement
         if (startButton) {
-            startButton.style.cursor = 'pointer'
+            startButton.removeClass('ff-button-disabled')
             startButton.disabled = false
         }
     }
 
     clearPreviousSelection(): void {
-        const previousSelected = this.contentEl.querySelector('.deck-selected') as HTMLElement
+        const previousSelected = this.contentEl.querySelector('.ff-selected') as HTMLElement
         if (previousSelected) {
-            previousSelected.removeClass('deck-selected')
-            previousSelected.style.backgroundColor = 'var(--interactive-normal)'
-            
-            // Reset child element colors
-            this.resetDeckElementColors(previousSelected)
+            previousSelected.removeClass('ff-selected')
+            previousSelected.addClass('ff-deck-clickable')
         }
     }
 
     updateDeckSelection(deckEl: HTMLElement): void {
-        deckEl.addClass('deck-selected')
-        deckEl.style.backgroundColor = 'var(--interactive-accent)'
-
-        // Update child element colors for better visibility on accent background
-        this.updateDeckElementColors(deckEl, true)
-    }
-
-    private resetDeckElementColors(deckEl: HTMLElement): void {
-        this.updateDeckElementColors(deckEl, false)
-    }
-
-    private updateDeckElementColors(deckEl: HTMLElement, isSelected: boolean): void {
-        const nameEl = deckEl.querySelector('.deck-name') as HTMLElement
-        const pathEl = deckEl.querySelector('.deck-path') as HTMLElement
-        const dueEl = deckEl.querySelector('.deck-due') as HTMLElement
-        const totalEl = deckEl.querySelector('.deck-total') as HTMLElement
-        
-        if (nameEl) {
-            nameEl.style.color = isSelected ? 'var(--text-on-accent)' : 'var(--text-normal)'
-        }
-        if (pathEl) {
-            pathEl.style.color = isSelected ? 'var(--text-on-accent)' : 'var(--text-faint)'
-            pathEl.style.opacity = isSelected ? '0.6' : ''
-        }
-        if (dueEl) {
-            dueEl.style.color = isSelected ? 'var(--text-on-accent)' : 'var(--text-accent)'
-        }
-        if (totalEl) {
-            totalEl.style.color = isSelected ? 'var(--text-on-accent)' : 'var(--text-muted)'
-            totalEl.style.opacity = isSelected ? '0.8' : ''
-        }
+        deckEl.addClass('ff-selected')
+        deckEl.removeClass('ff-deck-clickable')
     }
 
     // MARK: Callbacks

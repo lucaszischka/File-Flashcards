@@ -106,11 +106,10 @@ Your file content becomes the answer...
 - FSRS scheduling metadata stored in `spaced-repetition:` frontmatter namespace as array format
 
 #### Pattern-Based Deck Organization
-- Include patterns define which files become flashcards using glob syntax
-- Each pattern creates a separate deck for organized review sessions
-- Supports glob patterns with wildcards (`*`, `**`, folder paths)
-- Hierarchical deck structure based on pattern specificity (more specific patterns become children)
+- Include patterns define which files become flashcards using glob syntax (`*`, `**`, folder paths)
 - Exclude patterns filter out unwanted files (templates, drafts, etc.)
+- Each pattern creates a separate deck
+- Hierarchical deck structure based on pattern specificity (more specific patterns become children)
 
 #### FSRS Scheduling Algorithm
 - Modern Free Spaced Repetition Scheduler implementation via `ts-fsrs` library

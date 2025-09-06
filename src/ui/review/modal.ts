@@ -86,9 +86,9 @@ export class ReviewModal extends Modal {
             // Answer Section
             if (this.answerRevealed) {
                 try {
-                    const file = this.app.vault.getAbstractFileByPath(card.path) as TFile
-                    if (!file)
-                        throw new Error('File not found')
+                    const file = this.app.vault.getAbstractFileByPath(card.path)
+                    if (!(file instanceof TFile))
+                        throw new Error('File not found or not an instance of TFile')
                     const content = await this.app.vault.read(file)
 
                     await this.components.showAnswer(
@@ -125,10 +125,12 @@ export class ReviewModal extends Modal {
 
     private async rateCard(card: Card, rating: Rating, file?: TFile) {
         try {
-            if (!file)
-                file = this.app.vault.getAbstractFileByPath(card.path) as TFile
-            if (!file)
-                throw new Error('File not found')
+            if (!file) {
+                const fileByPath = this.app.vault.getAbstractFileByPath(card.path)
+                if (!(fileByPath instanceof TFile))
+                    throw new Error('File not found or not an instance of TFile')
+                file = fileByPath
+            }
 
             // Schedule and update frontmatter in one call (card.sr is updated automatically)
             const result = await this.frontmatterManager.updateScheduling(file, card, rating)

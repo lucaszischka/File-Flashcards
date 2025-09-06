@@ -34,10 +34,12 @@ export class FileFlashcardsSettingTab extends PluginSettingTab {
 						this.updatePreview()
 					})
 				text.inputEl.rows = 10
-				text.inputEl.style.width = '400px'
+				text.inputEl.addClass('ff-settings-input-wide')
 			})
 		includeSetting.descEl.empty()
 		includeSetting.descEl.appendText('Folders and patterns to include.')
+		includeSetting.descEl.createEl('br')
+		includeSetting.descEl.appendText('Only markdown files (.md) are processed regardless of pattern.')
 		includeSetting.descEl.createEl('br')
 		includeSetting.descEl.appendText('Use ')
 		includeSetting.descEl.createEl('code', { text: '**' })
@@ -51,7 +53,7 @@ export class FileFlashcardsSettingTab extends PluginSettingTab {
 			.setDesc('')
 			.addTextArea(text => {
 				text
-					.setPlaceholder('Journal/**\n**/README.md')
+					.setPlaceholder('Journal/**\n**/README')
 					.setValue(this.plugin.settings.exclude.join('\n'))
 					.onChange(async (value) => {
 						this.plugin.settings.exclude = value.split('\n').filter(line => line.trim().length > 0)
@@ -60,10 +62,12 @@ export class FileFlashcardsSettingTab extends PluginSettingTab {
 						this.updatePreview()
 					});
 				text.inputEl.rows = 5
-				text.inputEl.style.width = '400px'
+				text.inputEl.addClass('ff-settings-input-wide')
 			})
 		excludeSetting.descEl.empty()
 		excludeSetting.descEl.appendText('Folders and patterns to exclude from review.')
+		excludeSetting.descEl.createEl('br')
+		excludeSetting.descEl.appendText('File extensions are ignored since only markdown files are processed.')
 		excludeSetting.descEl.createEl('br')
 		excludeSetting.descEl.appendText('One per line.')
 
@@ -100,12 +104,7 @@ export class FileFlashcardsSettingTab extends PluginSettingTab {
 
         // Store preview element for file count preview
 		this.previewEl = this.containerEl.createEl('div')
-		this.previewEl.style.marginTop = '1em'
-		this.previewEl.style.padding = '0.5em'
-		this.previewEl.style.background = 'var(--background-secondary)'
-		this.previewEl.style.borderRadius = '10px'
-		this.previewEl.style.textAlign = 'center'
-		this.previewEl.style.color = 'var(--text-muted)'
+		this.previewEl.addClass('ff-settings-preview')
 		
 		this.updatePreview()
 	}

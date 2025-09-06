@@ -120,22 +120,79 @@ export class Deck {
     // MARK: Name
 
     getName(): string {
-        // Handle wildcard-only patterns
-        if (this.pattern === '*' || this.pattern === '**' || this.pattern === '**/*' || this.pattern === '*/**') {
-            return 'All'
-        }
+        const withoutExtension = this.pattern.replace(/\.[^.]*$/, '')
         
         // Handle glob patterns with wildcards
         if (this.pattern.includes('*')) {
-            // For patterns like "Work/**" or "Work/*", extract the base directory
-            const withoutWildcards = this.pattern.replace(/\/?\*+.*$/, '')
-            if (withoutWildcards && !withoutWildcards.match(/^\*+$/)) {
-                const parts = withoutWildcards.split('/').filter(part => part.length > 0)
-                if (parts.length > 0) {
-                    return parts[parts.length - 1]
+            // Count asterisks to validate pattern structure
+            const asteriskCount = (withoutExtension.match(/\*/g) || []).length
+            
+            // Check if this is one of our specific wildcard-only patterns
+            if (withoutExtension.endsWith('**') && asteriskCount === 2) {
+                // Extract directory name: "University/Work/**" -> "Work"
+                // However '**' would fail so the fallback kicks in
+                const beforeWildcard = withoutExtension.slice(0, -3) // Remove '/**'
+                if (beforeWildcard && !beforeWildcard.includes('*')) {
+                    const parts = beforeWildcard.split('/').filter(part => part.length > 0)
+                    if (parts.length > 0) {
+                        const lastDir = parts[parts.length - 1]
+                        return `All Files in ${lastDir}`
+                    }
                 }
+                return 'All Files' // Fallback
             }
-            return 'All'
+            
+            if (withoutExtension.endsWith('*') && asteriskCount === 1) {
+                // Extract directory name: "University/Work/*" -> "Work"
+                // However '*' would fail so the fallback kicks in
+                const beforeWildcard = withoutExtension.slice(0, -2) // Remove '/*'
+                if (beforeWildcard && !beforeWildcard.includes('*')) {
+                    const parts = beforeWildcard.split('/').filter(part => part.length > 0)
+                    if (parts.length > 0) {
+                        const lastDir = parts[parts.length - 1]
+                        return `Direct Files in ${lastDir}`
+                    }
+                }
+                return 'All Root Files' // Fallback
+            }
+            
+            if (withoutExtension.endsWith('**/*') && asteriskCount === 3) {
+                // Extract directory name: "University/Work/**/*" -> "Work"
+                // However '**/*' would fail so the fallback kicks in
+                const beforeWildcard = withoutExtension.slice(0, -5) // Remove '/**/*'
+                if (beforeWildcard && !beforeWildcard.includes('*')) {
+                    const parts = beforeWildcard.split('/').filter(part => part.length > 0)
+                    if (parts.length > 0) {
+                        const lastDir = parts[parts.length - 1]
+                        return `All Files in Directories of ${lastDir}`
+                    }
+                }
+                return 'All Files in Directories' // Fallback
+            }
+            
+            if (withoutExtension.endsWith('*/**') && asteriskCount === 3) {
+                // Extract directory name: "University/Work/*/**" -> "Work"
+                // However '/*/**' would fail so the fallback kicks in
+                const beforeWildcard = withoutExtension.slice(0, -4) // Remove '/*/**'
+                if (beforeWildcard && !beforeWildcard.includes('*')) {
+                    const parts = beforeWildcard.split('/').filter(part => part.length > 0)
+                    if (parts.length > 0) {
+                        const lastDir = parts[parts.length - 1]
+                        return `All Files in Top-level Folders of ${lastDir}`
+                    }
+                }
+                return 'All Files in Top-level Folders' // Fallback
+            }
+            
+            // For filename patterns like "chapter-*.md" (without directory structure)
+            const filenamePatternMatch = withoutExtension.match(/^(.+)-\*$/)
+            if (filenamePatternMatch) {
+                const prefix = filenamePatternMatch[1]
+                return `${prefix.charAt(0).toUpperCase() + prefix.slice(1)} Files`
+            }
+            
+            // Fallback for any other wildcard pattern
+            return 'Wildcard'
         }
         
         // Handle file paths - extract the last meaningful part
@@ -148,8 +205,8 @@ export class Deck {
             }
         }
         
-        // For simple patterns, return as-is (removing any file extension)
-        return this.pattern.replace(/\.[^.]*$/, '')
+        // For simple patterns, return as-is (without file extension)
+        return withoutExtension
     }
 
     // MARK: Due

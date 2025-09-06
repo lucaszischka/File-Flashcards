@@ -31,7 +31,7 @@ export class ErrorModal extends Modal {
         // Error title
         const titleEl = this.contentEl.createEl('h1')
         titleEl.setText(this.title)
-        titleEl.style.color = 'var(--text-error)'
+        titleEl.addClass('ff-error-title')
 
         this.components.addSpacer(this.contentEl)
 
@@ -56,7 +56,7 @@ export class ErrorModal extends Modal {
             // Create scrollable container for errors only
             const scrollContainer = this.components.createScrollViewContainer()
             const scrollView = this.components.createScrollView(scrollContainer)
-            scrollView.style.padding = '0 1em'
+            scrollView.addClass('ff-error-scroll-padding')
 
             this.errors.forEach(error => {
                 const errorItem = this.createValidationErrorItem(error)
@@ -67,21 +67,13 @@ export class ErrorModal extends Modal {
 
     createValidationErrorItem(error: ValidationError): HTMLElement {
         const itemEl = document.createElement('div')
-        itemEl.style.margin = '1em 0'
-        itemEl.style.padding = '0.5em'
-        itemEl.style.backgroundColor = 'var(--background-primary)'
-        itemEl.style.borderRadius = '10px'
-        itemEl.style.borderLeft = '10px solid var(--text-error)'
-        itemEl.style.paddingLeft = '15px'
+        itemEl.addClass('ff-error-item')
 
         // File path
         if (error.filePath) {
             const fileEl = itemEl.createEl('div')
             fileEl.setText(`📄 ${error.filePath}`)
-            fileEl.style.fontSize = '0.9em'
-            fileEl.style.color = 'var(--text-faint)'
-            fileEl.style.fontFamily = 'var(--font-monospace)'
-            fileEl.style.marginBottom = '0.25em'
+            fileEl.addClass('ff-error-file')
         }
         
         // Error type
@@ -89,42 +81,33 @@ export class ErrorModal extends Modal {
         headerText = headerText.charAt(0).toUpperCase() + headerText.slice(1)
         const headerEl = itemEl.createEl('strong')
         headerEl.setText(`⚠️ ${headerText}`)
-        headerEl.style.color = 'var(--text-error)'
-        headerEl.style.display = 'block'
-        headerEl.style.marginBottom = '0.5em'
+        headerEl.addClass('ff-error-header')
         
         // Message
         if (error.message) {
             const messageEl = itemEl.createEl('div')
             messageEl.setText(error.message)
-            messageEl.style.fontWeight = '500'
-            messageEl.style.marginBottom = '0.5em'
+            messageEl.addClass('ff-error-message')
         }
 
         // Field
         if (error.field) {
             const fieldEl = itemEl.createEl('div')
-            fieldEl.style.fontFamily = 'var(--font-monospace)'
-            fieldEl.style.fontSize = '0.8em'
-            fieldEl.style.color = 'var(--text-muted)'
+            fieldEl.addClass('ff-error-field')
             fieldEl.setText(`Field: ${error.field}`)
         }
 
         // Value 
         if (error.value !== undefined) {
             const valueEl = itemEl.createEl('div')
-            valueEl.style.fontFamily = 'var(--font-monospace)'
-            valueEl.style.fontSize = '0.8em'
-            valueEl.style.color = 'var(--text-muted)'
+            valueEl.addClass('ff-error-value')
             valueEl.setText(`Value: ${JSON.stringify(error.value)}`)
         }
 
         // Suggestion
         if (error.suggestion) {
             const suggestionEl = itemEl.createEl('div')
-            suggestionEl.style.fontStyle = 'italic'
-            suggestionEl.style.color = 'var(--text-accent)'
-            suggestionEl.style.marginTop = '0.5em'
+            suggestionEl.addClass('ff-error-suggestion')
             suggestionEl.setText(`💡 ${error.suggestion}`)
         }
 

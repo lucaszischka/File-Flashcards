@@ -18,8 +18,10 @@ An Obsidian plugin for file-centric spaced repetition where each Markdown file b
 
 1. **Install** the plugin from Community Plugins
 2. **Configure** include patterns in Settings → Flashcards from MarkDown files
-   - Example: `Flashcards/` to include all files in a Flashcards folder
-   - Example: `Study/**` to include all files in Study folder and subfolders
+   - Example: `**` to include all markdown files in vault (root and subfolders)
+   - Example: `Study/**` or `Flashcards/**` to include all files in Study/Flashcards folder and subfolders
+   - Example: `Work/Project-A/*` to include files directly in Project-A folder
+   - **Note**: Only markdown files (`.md`) are processed regardless of pattern
 3. **Start reviewing** by clicking the ribbon icon (shows card count badge)
 4. **Select a deck** if multiple include patterns create different decks
 5. **Review cards** using the FSRS rating system (Again, Hard, Good, Easy)
@@ -27,11 +29,12 @@ An Obsidian plugin for file-centric spaced repetition where each Markdown file b
 ## ⚙️ Settings
 
 ### 📝 File Selection
-- **Include Patterns**: Folders/patterns to include (e.g., `Flashcards/`, `Study/**`)
+- **Include Patterns**: Folders/patterns to include (e.g., `Flashcards/**`, `Study/**`)
   - Each pattern creates a separate deck for review
   - Supports glob patterns with wildcards (`*`, `**`)
-  - Hierarchical deck organization based on pattern specificity
-- **Exclude Patterns**: Files/patterns to exclude (e.g., `Templates/`, `*.template.md`)
+  - Only markdown files (`.md`) are processed regardless of pattern
+- **Exclude Patterns**: Files/patterns to exclude (e.g., `Templates/**`, `**.template`)
+  - Supports same glob patterns as include patterns
 
 ### 🎯 Review Behavior  
 - **Max Cards Per Day**: Limit daily reviews (0 = unlimited)
@@ -40,27 +43,14 @@ An Obsidian plugin for file-centric spaced repetition where each Markdown file b
   - When limit is reached, option to continue with all cards or batch size
 - **Show Badge**: Display count of due cards on ribbon icon
 
-## 📁 File Patterns & Decks
+## 📁 Decks
 
-The plugin creates **decks** from your include patterns, allowing organized review sessions:
-
-### 📋 Pattern Examples
-- `Flashcards/` - Include entire folder and subfolders (creates "Flashcards" deck)
-- `Study/**` - Include all files in Study folder recursively (creates "Study" deck)  
-- `Work/Project-A/*.md` - Include specific markdown files (creates "Project-A" deck)
-- `*` - Include all files in vault (creates "All" deck)
-
-### 🌳 Deck Hierarchy
+The plugin creates **decks** from your include patterns, allowing organized hierarchical deck organization:
 - More specific patterns become child decks of general ones
 - Example: `Work/Math/**` becomes a child of `Work/**`
 - Hierarchical display with indentation
 - Single deck: Review starts immediately
 - Multiple decks: Deck selection modal appears first
-
-### 🚫 Exclusion Patterns
-- `Templates/` - Exclude Templates folder  
-- `**.template.md` - Exclude template files
-- Supports same glob patterns as include patterns
 
 ## ⌨️ Keyboard Shortcuts
 

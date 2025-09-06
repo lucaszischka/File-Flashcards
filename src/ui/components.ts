@@ -15,32 +15,23 @@ export class UIComponents {
 
     setupFullscreenModal(modalEl: HTMLElement, titleEl: HTMLElement, contentEl: HTMLElement): void {
         // Make modal fill screen
-        modalEl.style.width = '100vw'
-        modalEl.style.height = '100vh'
-        // For fullscreen size:
-        //modalEl.style.maxWidth = '100vw'
-        //modalEl.style.maxHeight = '100vh'
+        modalEl.addClass('ff-fullscreen-modal')
 
         // We don't set a title, but the element is still there and has a margin
         // We need to remove it as it messes with size calculations
         const header = titleEl.parentElement
-        if (header) {
-            header.style.marginBottom = '0'
-        }
+        if (header)
+            header.addClass('ff-modal-header')
 
         // Place the content in a flex container for proper sizing and alignment
-        contentEl.style.height = '100%' // Make it always exactly fill the remaining space
-        // VStack
-        contentEl.style.display = 'flex'
-        contentEl.style.flexDirection = 'column'
-        contentEl.style.textAlign = 'center'
+        contentEl.addClass('ff-modal-content')
     }
 
     // MARK: UI Utilities
 
     addSpacer(contentEl: HTMLElement) {
         const spacerEl = contentEl.createEl('div')
-        spacerEl.style.flex = '1'
+        spacerEl.addClass('ff-spacer')
     }
 
     showTrophyIcon(): void {
@@ -74,8 +65,7 @@ export class UIComponents {
 
     createVStack(contentEl: HTMLElement): HTMLElement {
         const vStack = contentEl.createDiv()
-        vStack.style.display = 'flex'
-        vStack.style.flexDirection = 'column'
+        vStack.addClass('ff-vstack')
         return vStack
     }
 
@@ -98,9 +88,7 @@ export class UIComponents {
     ): HTMLButtonElement {
         const parent = container || this.showButtonContainer()
         const button = parent.createEl('button', { text })
-        button.style.cursor = 'pointer'
-        button.style.flex = '1'
-        button.style.maxWidth = '200px'
+        button.addClass('ff-button')
         button.addEventListener('click', onClick)
         return button
     }
@@ -108,11 +96,7 @@ export class UIComponents {
     // Applied to all buttons for consistent styling
     showButtonContainer(): HTMLElement {
         const container = this.contentEl.createEl('div')
-        container.style.display = 'flex'
-        container.style.justifyContent = 'center'
-        container.style.gap = '0.5em'
-        container.style.flexWrap = 'wrap'
-        container.style.marginTop = '1em'
+        container.addClass('ff-button-container')
         return container
     }
 
@@ -121,19 +105,13 @@ export class UIComponents {
     createScrollViewContainer(): HTMLElement {
         // Container with rounded corners, background and border
         const outerEl = this.contentEl.createEl('div')
-        outerEl.style.background = 'var(--background-primary-alt)'
-        outerEl.style.border = '1px solid var(--background-modifier-border)'
-        outerEl.style.borderRadius = '20px'
-        outerEl.style.overflow = 'hidden' // Ensures border-radius clips everything
-        outerEl.style.position = 'relative' // Make sure icon is positioned correctly
+        outerEl.addClass('ff-scroll-container')
         return outerEl
     }
 
     createScrollView(containerEl: HTMLElement): HTMLElement {
         const innerEl = containerEl.createEl('div')
-        innerEl.style.overflowY = 'auto'
-        innerEl.style.height = '100%'
-        innerEl.style.textAlign = 'left'
+        innerEl.addClass('ff-scroll-view')
         return innerEl
     }
 
@@ -179,12 +157,10 @@ export class UIComponents {
 
         // Error container with styling similar to answer container
         const outerEl = this.createScrollViewContainer()
-        outerEl.style.background = 'var(--background-secondary)'
-        outerEl.style.border = '2px solid var(--text-error)'
+        outerEl.addClass('ff-error-container')
         
         const innerEl = this.createScrollView(outerEl)
-        innerEl.style.padding = '2em'
-        innerEl.style.textAlign = 'center' // overwrite
+        innerEl.addClass('ff-error-content')
 
         // Error icon and title
         const errorIconEl = this.createErrorIcon()
@@ -192,42 +168,28 @@ export class UIComponents {
 
         const titleEl = innerEl.createEl('h2')
         titleEl.setText('Unable to Load Card')
-        titleEl.style.color = 'var(--text-error)'
-        titleEl.style.marginTop = '0.5em'
-        titleEl.style.marginBottom = '1em'
+        titleEl.addClass('ff-error-display-title')
 
         // Error message
         const messageEl = innerEl.createEl('p')
         messageEl.setText(`Failed to read the card file content.`)
-        messageEl.style.marginBottom = '0.5em'
+        messageEl.addClass('ff-error-display-message')
 
         // File path
         const pathEl = innerEl.createEl('div')
         pathEl.setText(cardPath)
-        pathEl.style.fontFamily = 'var(--font-monospace)'
-        pathEl.style.fontSize = '0.9em'
-        pathEl.style.color = 'var(--text-muted)'
-        pathEl.style.marginBottom = '1.5em'
-        pathEl.style.wordBreak = 'break-all'
+        pathEl.addClass('ff-error-display-path')
 
         // Error details (collapsed by default)
         const detailsEl = innerEl.createEl('details')
-        detailsEl.style.marginBottom = '1.5em'
-        detailsEl.style.textAlign = 'left'
+        detailsEl.addClass('ff-error-details')
         
         const summaryEl = detailsEl.createEl('summary')
         summaryEl.setText('Error Details')
-        summaryEl.style.cursor = 'pointer'
-        summaryEl.style.color = 'var(--text-muted)'
-        summaryEl.style.marginBottom = '0.5em'
+        summaryEl.addClass('ff-error-details-summary')
 
         const errorContentEl = detailsEl.createEl('pre')
-        errorContentEl.style.background = 'var(--background-primary-alt)'
-        errorContentEl.style.padding = '1em'
-        errorContentEl.style.borderRadius = '10px'
-        errorContentEl.style.fontSize = '0.8em'
-        errorContentEl.style.overflow = 'auto'
-        errorContentEl.style.whiteSpace = 'pre-wrap'
+        errorContentEl.addClass('ff-error-content-details')
         errorContentEl.setText(error.stack || error.message)
 
         // Add spacer and buttons
@@ -262,7 +224,7 @@ export class UIComponents {
 
         const outerEl = this.createScrollViewContainer()
         const innerEl = this.createScrollView(outerEl)
-        innerEl.style.padding = '0 1em'
+        innerEl.addClass('ff-stacktrace-padding')
         this.renderMarkdownContent(content, cardPath, innerEl)
         if (Platform.isDesktopApp)
             this.addEditButton(outerEl, cardPath)
@@ -294,7 +256,7 @@ export class UIComponents {
     ): void {
         // Add icon in bottom right
         const iconEl = containerEl.createEl('button')
-        iconEl.style.cursor = 'pointer'
+        iconEl.addClass('ff-clickable-icon')
         iconEl.title = 'Open Editor in new window'
         // SVG Icon
         const svg = iconEl.createSvg('svg', {
@@ -314,18 +276,7 @@ export class UIComponents {
         svg.createSvg('path', { attr: { d: 'M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z' } })
         svg.createSvg('path', { attr: { d: 'm15 5 4 4' } })
         iconEl.addEventListener('click', () => this.app.workspace.openLinkText(cardPath, '', 'window'))
-        this.styleEditButton(iconEl)
-    }
-
-    private styleEditButton(iconEl: HTMLButtonElement): void {
-        iconEl.style.position = 'absolute'
-        iconEl.style.bottom = '10px'
-        iconEl.style.right = '20px'
-        iconEl.style.padding = '8px' // Overwrite default padding
-        // Make circle
-        iconEl.style.width = '32px'
-        iconEl.style.height = '32px'
-        iconEl.style.borderRadius = '50%'
+        iconEl.addClass('ff-edit-button')
     }
 
     private showRatingButtons(
@@ -348,9 +299,7 @@ export class UIComponents {
         const progressEl = this.contentEl.createEl('div', { 
             text: `Card ${currentIndex + 1} of ${totalCards}`
         })
-        progressEl.style.fontSize = '0.8em'
-        progressEl.style.color = 'var(--text-muted)'
-        progressEl.style.marginTop = '0.5em'
+        progressEl.addClass('ff-progress-indicator')
         return progressEl
     }
 }
