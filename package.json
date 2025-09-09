@@ -1,6 +1,6 @@
 {
 	"name": "file-flashcards",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Treat your MarkDown files as flashcards, supporting spaced repetition.",
 	"main": "main.js",
 	"scripts": {

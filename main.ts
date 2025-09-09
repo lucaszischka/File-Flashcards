@@ -21,6 +21,13 @@ export default class FileFlashcardsPlugin extends Plugin {
 		this.dailyLimitManager = new DailyLimit(this)
 		await this.dailyLimitManager.init()
 
+		// Add command for starting review session
+		this.addCommand({
+			id: 'start-spaced-repetition',
+			name: 'Start Spaced Repetition',
+			callback: () => this.openModal()
+		})
+
 		// Add ribbon icon for starting review session
 		this.ribbonIconEl = this.addRibbonIcon(
 			'gallery-vertical-end',

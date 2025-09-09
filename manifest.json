@@ -1,7 +1,7 @@
 {
 	"id": "file-flashcards",
 	"name": "Flashcards from MarkDown files",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"minAppVersion": "0.15.0",
 	"description": "Treat your MarkDown files as flashcards, supporting spaced repetition.",
 	"author": "Lucas Zischka",

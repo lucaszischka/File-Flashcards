@@ -77,7 +77,9 @@ The plugin creates file-based flashcards where each Markdown file becomes a flas
 - **Settings Tab**: Configuration interface for patterns, daily limits, and badge display
 - **Review Modal**: FSRS-based review interface with four-button rating system
 - **Deck Selection Modal**: Hierarchical deck chooser for multiple deck scenarios
-- **Error Modal**: User-friendly error reporting with recovery options and data backup info### File-Based Flashcard System
+- **Error Modal**: User-friendly error reporting with recovery options and data backup info
+
+### File-Based Flashcard System
 
 #### Frontmatter Schema
 

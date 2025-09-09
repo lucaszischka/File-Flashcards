@@ -22,7 +22,9 @@ An Obsidian plugin for file-centric spaced repetition where each Markdown file b
    - Example: `Study/**` or `Flashcards/**` to include all files in Study/Flashcards folder and subfolders
    - Example: `Work/Project-A/*` to include files directly in Project-A folder
    - **Note**: Only markdown files (`.md`) are processed regardless of pattern
-3. **Start reviewing** by clicking the ribbon icon (shows card count badge)
+3. **Start reviewing** by:
+   - Clicking the ribbon icon (shows card count badge)
+   - Using [Command Palette](https://help.obsidian.md/plugins/command-palette) (Ctrl/Cmd+P)
 4. **Select a deck** if multiple include patterns create different decks
 5. **Review cards** using the FSRS rating system (Again, Hard, Good, Easy)
 
